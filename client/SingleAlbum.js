@@ -7,7 +7,7 @@ const SingleAlbum = (props) => {
     return (
         <div id='single-album' className='column'>
         <Album album={album} />
-        <Songs />
+        <Songs songs={album.songs} />
         </div>
     )
 }
