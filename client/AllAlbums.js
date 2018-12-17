@@ -1,22 +1,14 @@
 import React from 'react'
+import Album from './Album'
 
-const AllAlbums = ({albums}) => {
+const AllAlbums = ({albums, pickAlbum}) => {
     return (
-        <div className='container'>
-            <div id='albums' className='row wrap'>
+        <div id='albums' className='row wrap'>
             {
-                albums.map((album, i) => (
-                    <div className='album' key={i}>
-                        <a>
-                        <img src={album.artworkUrl} />
-                        <p>{album.name}</p>
-                        <small>{album.artist.name}</small>
-                        </a>
-                    </div>
-                ))
+                albums.map((album, i) => 
+                    <Album album={album} pickAlbum={pickAlbum} key={i} />)
             }          
-            </div>
-        </div>
+        </div>    
     )
 }
 

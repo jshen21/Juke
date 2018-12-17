@@ -2,14 +2,18 @@ import React from 'react'
 import Sidebar from './Sidebar'
 import AllAlbums from './AllAlbums'
 import Player from './Player'
+import SingleAlbum from './SingleAlbum'
 import axios from 'axios'
 
 export default class Main extends React.Component {
   constructor () {
     super() 
     this.state = {
-      albums: []
+      albums: [],
+      selectedAlbum: {}
     }
+    this.pickAlbum = this.pickAlbum.bind(this)
+    this.deselectAlbum = this.deselectAlbum.bind(this)
   }
 
   async componentDidMount(){
@@ -21,11 +25,31 @@ export default class Main extends React.Component {
     }
   }
 
+  async pickAlbum (albumId) {
+    try {
+      const response = await axios.get(`/api/albums/${albumId}`)
+      this.setState({selectedAlbum: response.data})
+    } catch (err) {
+      console.log(err)
+    }
+
+  }
+
+  deselectAlbum () {
+    this.setState({selectedAlbum: {}})
+  }
+
   render () {
     return (
       <div id='main' className='row container'>
-        <Sidebar />
-        <AllAlbums albums={this.state.albums}/>
+        <Sidebar deselectAlbum={this.deselectAlbum} />
+        <div className='container'>
+        {
+          this.state.selectedAlbum.id?
+          <SingleAlbum album={this.state.selectedAlbum} />:
+          <AllAlbums albums={this.state.albums} pickAlbum={this.pickAlbum} />
+        }
+        </div>     
         <Player />
       </div>
     )
