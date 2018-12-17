@@ -2,14 +2,18 @@ import React from 'react'
 import Sidebar from './Sidebar'
 import AllAlbums from './AllAlbums'
 import Player from './Player'
+import SingleAlbum from './SingleAlbum'
 import axios from 'axios'
 
 export default class Main extends React.Component {
   constructor () {
     super() 
     this.state = {
-      albums: []
+      albums: [],
+      selectedAlbum: {}
     }
+    this.pickAlbum = this.pickAlbum.bind(this)
+    this.deselectAlbum = this.deselectAlbum.bind(this)
   }
 
   async componentDidMount(){
@@ -21,56 +25,31 @@ export default class Main extends React.Component {
     }
   }
 
+  async pickAlbum (albumId) {
+    try {
+      const response = await axios.get(`/api/albums/${albumId}`)
+      this.setState({selectedAlbum: response.data})
+    } catch (err) {
+      console.log(err)
+    }
+
+  }
+
+  deselectAlbum () {
+    this.setState({selectedAlbum: {}})
+  }
+
   render () {
     return (
       <div id='main' className='row container'>
-        <Sidebar />
-        {/* <AllAlbums albums={this.state.albums} /> */}
+        <Sidebar deselectAlbum={this.deselectAlbum} />
         <div className='container'>
-
-          <div id='single-album' className='column'>
-            <div className='album'>
-              <a>
-                <img src='default-album.jpg' />
-                <p>ALBUM 2</p>
-                <small>Artist Name</small>
-              </a>
-            </div>
-            <table id='songs'>
-              <tbody>
-                <tr className='gray'>
-                  <td />
-                  <td>#</td>
-                  <td>Name</td>
-                  <td>Artist</td>
-                  <td>Genre</td>
-                </tr>
-                <tr>
-                  <td><i className='fa fa-play-circle' /></td>
-                  <td>1</td>
-                  <td>Song Name</td>
-                  <td>Artist Name</td>
-                  <td>Song Genre</td>
-                </tr>
-                <tr>
-                  <td><i className='fa fa-play-circle' /></td>
-                  <td>2</td>
-                  <td>Song Name</td>
-                  <td>Artist Name</td>
-                  <td>Song Genre</td>
-                </tr>
-                <tr>
-                  <td><i className='fa fa-play-circle' /></td>
-                  <td>3</td>
-                  <td>Song Name</td>
-                  <td>Artist Name</td>
-                  <td>Song Genre</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        
+        {
+          this.state.selectedAlbum.id?
+          <SingleAlbum album={this.state.selectedAlbum} />:
+          <AllAlbums albums={this.state.albums} pickAlbum={this.pickAlbum} />
+        }
+        </div>     
         <Player />
       </div>
     )
