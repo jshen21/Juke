@@ -1,7 +1,8 @@
 import React from 'react'
 import Album from './Album'
 
-const AllAlbums = ({albums, pickAlbum}) => {
+const AllAlbums = (props) => {
+    const {albums, pickAlbum} = props
     return (
         <div id='albums' className='row wrap'>
             {

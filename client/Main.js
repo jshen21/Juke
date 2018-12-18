@@ -5,18 +5,15 @@ import Player from './Player'
 import SingleAlbum from './SingleAlbum'
 import axios from 'axios'
 
-const audio = document.createElement('audio')
-
 export default class Main extends React.Component {
   constructor () {
     super() 
     this.state = {
       albums: [],
-      selectedAlbum: {}
+      selectedAlbum: {},
     }
     this.pickAlbum = this.pickAlbum.bind(this)
     this.deselectAlbum = this.deselectAlbum.bind(this)
-    this.start = this.start.bind(this)
   }
 
   async componentDidMount(){
@@ -42,24 +39,21 @@ export default class Main extends React.Component {
     this.setState({selectedAlbum: {}})
   }
 
-  start(audioUrl) {
-    audio.src = audioUrl;
-    audio.load();
-    audio.play();
-  }
-
   render () {
+    const {albums, selectedAlbum} = this.state;
+    const {currentSong, toggle, toggleOne, isPlaying} = this.props
     return (
       <div id='main' className='row container'>
         <Sidebar deselectAlbum={this.deselectAlbum} />
         <div className='container'>
         {
           this.state.selectedAlbum.id?
-          <SingleAlbum album={this.state.selectedAlbum} start={this.start} />:
-          <AllAlbums albums={this.state.albums} pickAlbum={this.pickAlbum} />
+          <SingleAlbum album={selectedAlbum} currentSong={currentSong} toggleOne={toggleOne}
+          isPlaying={isPlaying} />:
+          <AllAlbums albums={albums} pickAlbum={this.pickAlbum} />
         }
         </div>     
-        <Player />
+        <Player toggle={toggle} isPlaying={isPlaying} />
       </div>
     )
   }
