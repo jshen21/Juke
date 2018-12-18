@@ -1,6 +1,7 @@
 import React from 'react'
 
-const Songs = ({songs}) => {
+const Songs = (props) => {
+  let {songs, start} = props
     return (
         <table id='songs'>
         <tbody>
@@ -14,7 +15,7 @@ const Songs = ({songs}) => {
           {
             songs.map((song,i) => (
           <tr key={i}>
-            <td><i className='fa fa-play-circle' /></td>
+            <td><i className='fa fa-play-circle' onClick={() => start(song.audioUrl)} /></td>
             <td>{i + 1}</td>
             <td>{song.name}</td>
             <td>{song.artist.name}</td>

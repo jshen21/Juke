@@ -5,6 +5,8 @@ import Player from './Player'
 import SingleAlbum from './SingleAlbum'
 import axios from 'axios'
 
+const audio = document.createElement('audio')
+
 export default class Main extends React.Component {
   constructor () {
     super() 
@@ -14,6 +16,7 @@ export default class Main extends React.Component {
     }
     this.pickAlbum = this.pickAlbum.bind(this)
     this.deselectAlbum = this.deselectAlbum.bind(this)
+    this.start = this.start.bind(this)
   }
 
   async componentDidMount(){
@@ -39,6 +42,12 @@ export default class Main extends React.Component {
     this.setState({selectedAlbum: {}})
   }
 
+  start(audioUrl) {
+    audio.src = audioUrl;
+    audio.load();
+    audio.play();
+  }
+
   render () {
     return (
       <div id='main' className='row container'>
@@ -46,7 +55,7 @@ export default class Main extends React.Component {
         <div className='container'>
         {
           this.state.selectedAlbum.id?
-          <SingleAlbum album={this.state.selectedAlbum} />:
+          <SingleAlbum album={this.state.selectedAlbum} start={this.start} />:
           <AllAlbums albums={this.state.albums} pickAlbum={this.pickAlbum} />
         }
         </div>     

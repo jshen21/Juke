@@ -3,11 +3,11 @@ import Album from './Album'
 import Songs from './Songs'
 
 const SingleAlbum = (props) => {
-    let album = props.album
+    let { album, start } = props
     return (
         <div id='single-album' className='column'>
         <Album album={album} />
-        <Songs songs={album.songs} />
+        <Songs songs={album.songs} start={start} />
         </div>
     )
 }
