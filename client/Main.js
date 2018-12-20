@@ -1,11 +1,11 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Sidebar from './Sidebar'
 import AllAlbums from './AllAlbums'
 import Player from './Player'
 import SingleAlbum from './SingleAlbum'
 import axios from 'axios'
 
-export default class Main extends React.Component {
+export default class Main extends Component {
   constructor () {
     super() 
     this.state = {
@@ -41,7 +41,7 @@ export default class Main extends React.Component {
 
   render () {
     const {albums, selectedAlbum} = this.state;
-    const {currentSong, toggle, toggleOne, isPlaying} = this.props
+    const {currentSong, toggle, toggleOne, prev, next, isPlaying} = this.props
     return (
       <div id='main' className='row container'>
         <Sidebar deselectAlbum={this.deselectAlbum} />
@@ -53,7 +53,7 @@ export default class Main extends React.Component {
           <AllAlbums albums={albums} pickAlbum={this.pickAlbum} />
         }
         </div>     
-        <Player toggle={toggle} isPlaying={isPlaying} />
+        <Player toggle={toggle} isPlaying={isPlaying} prev={prev} next={next} />
       </div>
     )
   }
