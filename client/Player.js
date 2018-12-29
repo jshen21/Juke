@@ -1,17 +1,23 @@
 import React from 'react'
 
-const Player = () => {
-    return (
-        <div id='player-container'>
-          <div id='player-controls'>
-            <div className='row center'>
-              <i className='fa fa-step-backward'></i>
-              <i className='fa fa-pause-circle'></i>
-              <i className='fa fa-step-forward'></i>
-            </div>
+const Player = (props) => {
+  const {prev, toggle, isPlaying, next} = props
+
+  return (
+      <div id='player-container'>
+        <div id='player-controls'>
+          <div className='row center'>
+            <i className='fa fa-step-backward'
+              onClick={prev} />
+            <i className={isPlaying? 'fa fa-pause-circle' : 'fa fa-play-circle'} 
+              onClick={toggle} />
+            <i className='fa fa-step-forward'
+              onClick={next} />
           </div>
         </div>
-    )
+      </div>
+  )
 }
 
 export default Player
+
