@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Audio from './Audio'
+import Main from './Main'
 
 ReactDOM.render(
-  <Audio />,
+  <Main />,
   document.getElementById('app')
 )
